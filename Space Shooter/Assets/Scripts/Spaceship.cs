@@ -17,6 +17,9 @@ public class Spaceship : MonoBehaviour
     [SerializeField] private float cooldown_time_normal_rocket;
     private float last_trigger_normal_rocket;
 
+    [SerializeField] private GameObject tracking_rocket;
+    [SerializeField] private GameObject cannon_tracking_rocket_1;
+    [SerializeField] private GameObject cannon_tracking_rocket_2;
     [SerializeField] private GameObject crosshair_rocket; 
     [SerializeField] private Canvas canvas; 
     [SerializeField] private int max_crosshairs;
@@ -33,6 +36,7 @@ public class Spaceship : MonoBehaviour
         ShootingNormalRocket();
         SelectAsteroids();
         UpdateCrosshairPositions();
+        FireTrackingRockets();
     }
 
     void Movement()
@@ -123,9 +127,9 @@ public class Spaceship : MonoBehaviour
     {
         foreach (var entry in asteroid_to_crosshair_map)
         {
-            Destroy(entry.Value); 
+            Destroy(entry.Value);
         }
-        asteroid_to_crosshair_map.Clear(); 
+        asteroid_to_crosshair_map.Clear();
     }
 
     GameObject SpawnCrosshair(GameObject asteroid)
@@ -151,7 +155,7 @@ public class Spaceship : MonoBehaviour
             if (asteroid == null)
             {
                 Destroy(crosshair);
-                asteroids_to_remove.Add(asteroid); 
+                asteroids_to_remove.Add(asteroid);
             }
             else
             {
@@ -163,6 +167,32 @@ public class Spaceship : MonoBehaviour
         foreach (GameObject asteroid in asteroids_to_remove)
         {
             asteroid_to_crosshair_map.Remove(asteroid);
+        }
+    }
+
+    void FireTrackingRockets()
+    {
+        if (Input.GetMouseButtonDown(0) && asteroid_to_crosshair_map.Count > 0)
+        {
+            foreach (var entry in asteroid_to_crosshair_map)
+            {
+                GameObject target = entry.Key;
+
+                bool switch_cannon = Random.value > 0.5f; 
+
+                GameObject spawnPosition = switch_cannon ? cannon_tracking_rocket_1 : cannon_tracking_rocket_2;
+                GameObject rocket = Instantiate(tracking_rocket, spawnPosition.transform.position, spawnPosition.transform.rotation);
+
+                TrackingRocket rocketTracker = rocket.GetComponent<TrackingRocket>();
+                if (rocketTracker != null)
+                {
+                    rocketTracker.SetTarget(target);
+                }
+                else
+                {
+                    Debug.LogError("TrackingRocket component not found on tracking rocket prefab.");
+                }
+            }
         }
     }
 }
