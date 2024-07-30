@@ -10,8 +10,8 @@ public class Spaceship : MonoBehaviour
     [SerializeField] private GameObject cannon_object_2;
     [SerializeField] private bool cannon_active_switch;
 
-    [SerializeField] private float cooldownTime;
-    private float lastTriggerTime;
+    [SerializeField] private float cooldown_time_laser;
+    private float last_trigger_time_laser;
 
     private void Update()
     {
@@ -43,7 +43,7 @@ public class Spaceship : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (Time.time > lastTriggerTime + cooldownTime)
+            if (Time.time > last_trigger_time_laser + cooldown_time_laser)
             {
                 if (cannon_active_switch) 
                 {
@@ -56,7 +56,7 @@ public class Spaceship : MonoBehaviour
                     cannon_active_switch = true;
                 }
 
-                lastTriggerTime = Time.time;
+                last_trigger_time_laser = Time.time;
             }
         }
     }
