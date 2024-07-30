@@ -34,9 +34,8 @@ public class KleinerAsteroid : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("laser"))
+        if (other.CompareTag("laser") || other.CompareTag("big_rocket"))
         {
-            Debug.Log("Treffer");
             Destroy(other.gameObject);
             Destroy(gameObject);
         }

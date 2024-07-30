@@ -6,6 +6,7 @@ TagManager:
   tags:
   - kleiner_asteroid
   - laser
+  - big_rocket
   layers:
   - Default
   - TransparentFX
