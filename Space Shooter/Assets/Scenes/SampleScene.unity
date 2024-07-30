@@ -6141,3 +6141,5 @@ MonoBehaviour:
   canvas: {fileID: 1333978770}
   max_crosshairs: 3
   player_transform: {fileID: 8204115870168027825}
+  rocket_delay: 0.15
+  cooldown_time_tracking_rocket: 5

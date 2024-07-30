@@ -24,6 +24,9 @@ public class Spaceship : MonoBehaviour
     [SerializeField] private Canvas canvas; 
     [SerializeField] private int max_crosshairs;
     [SerializeField] private Transform player_transform;
+    [SerializeField] private float rocket_delay;
+    [SerializeField] private float cooldown_time_tracking_rocket;
+    private float last_trigger_tracking_rocket;
 
     private List<GameObject> asteroids = new List<GameObject>();
     private List<GameObject> selected_asteroids = new List<GameObject>();
@@ -99,26 +102,31 @@ public class Spaceship : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (asteroid_to_crosshair_map.Count > 0)
+            if (Time.time > last_trigger_tracking_rocket + cooldown_time_tracking_rocket)
             {
-                ClearAllCrosshairs();
-            }
-            else
-            {
-                asteroids.Clear();
-                GameObject[] all_asteroids = GameObject.FindGameObjectsWithTag("kleiner_asteroid");
-                asteroids.AddRange(all_asteroids);
-
-                asteroids.Sort((a, b) => Vector3.Distance(player_transform.position, a.transform.position).CompareTo(Vector3.Distance(player_transform.position, b.transform.position)));
-
-                int count = Mathf.Min(max_crosshairs, asteroids.Count);
-
-                for (int i = 0; i < count; i++)
+                if (asteroid_to_crosshair_map.Count > 0)
                 {
-                    GameObject asteroid = asteroids[i];
-                    GameObject crosshair = SpawnCrosshair(asteroid);
-                    asteroid_to_crosshair_map.Add(asteroid, crosshair);
+                    ClearAllCrosshairs();
                 }
+                else
+                {
+                    asteroids.Clear();
+                    GameObject[] all_asteroids = GameObject.FindGameObjectsWithTag("kleiner_asteroid");
+                    asteroids.AddRange(all_asteroids);
+
+                    asteroids.Sort((a, b) => Vector3.Distance(player_transform.position, a.transform.position).CompareTo(Vector3.Distance(player_transform.position, b.transform.position)));
+
+                    int count = Mathf.Min(max_crosshairs, asteroids.Count);
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        GameObject asteroid = asteroids[i];
+                        GameObject crosshair = SpawnCrosshair(asteroid);
+                        asteroid_to_crosshair_map.Add(asteroid, crosshair);
+                    }
+                }
+
+                last_trigger_tracking_rocket = Time.time;
             }
         }
     }
@@ -174,25 +182,31 @@ public class Spaceship : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && asteroid_to_crosshair_map.Count > 0)
         {
-            foreach (var entry in asteroid_to_crosshair_map)
+            StartCoroutine(FireRocketsCoroutine());
+        }
+    }
+
+    private IEnumerator FireRocketsCoroutine()
+    {
+        List<GameObject> targets = new List<GameObject>(asteroid_to_crosshair_map.Keys);
+
+        foreach (GameObject target in targets)
+        {
+            bool switch_cannon = Random.value > 0.5f;
+            GameObject spawnPosition = switch_cannon ? cannon_tracking_rocket_1 : cannon_tracking_rocket_2;
+            GameObject rocket = Instantiate(tracking_rocket, spawnPosition.transform.position, spawnPosition.transform.rotation);
+
+            TrackingRocket rocketTracker = rocket.GetComponent<TrackingRocket>();
+            if (rocketTracker != null)
             {
-                GameObject target = entry.Key;
-
-                bool switch_cannon = Random.value > 0.5f; 
-
-                GameObject spawnPosition = switch_cannon ? cannon_tracking_rocket_1 : cannon_tracking_rocket_2;
-                GameObject rocket = Instantiate(tracking_rocket, spawnPosition.transform.position, spawnPosition.transform.rotation);
-
-                TrackingRocket rocketTracker = rocket.GetComponent<TrackingRocket>();
-                if (rocketTracker != null)
-                {
-                    rocketTracker.SetTarget(target);
-                }
-                else
-                {
-                    Debug.LogError("TrackingRocket component not found on tracking rocket prefab.");
-                }
+                rocketTracker.SetTarget(target);
             }
+            else
+            {
+                Debug.LogError("TrackingRocket component not found on tracking rocket prefab.");
+            }
+
+            yield return new WaitForSeconds(rocket_delay); 
         }
     }
 }
