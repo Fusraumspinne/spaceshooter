@@ -8,6 +8,7 @@ TagManager:
   - laser
   - big_rocket
   - tracking_rocket
+  - "gro\xDFer_asteroid"
   layers:
   - Default
   - TransparentFX
