@@ -399,7 +399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 15
-  destroy_timer: 5.25
+  destroy_timer: 7.25
   score_value: 1
   xp_value: 1
   destroy_tags:

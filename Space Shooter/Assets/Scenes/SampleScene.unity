@@ -267,8 +267,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16
-  m_fontSizeBase: 16
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -334,7 +334,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 117.63, y: -68.2}
+  m_AnchoredPosition: {x: 117.63, y: -87.6}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &121759673
@@ -552,8 +552,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 73.5, y: -19}
-  m_SizeDelta: {x: 125, y: 22}
+  m_AnchoredPosition: {x: 110, y: -30.7}
+  m_SizeDelta: {x: 200, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &206591291
 MonoBehaviour:
@@ -945,8 +945,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 16
+  m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -6569,9 +6569,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91c41a10033b1e342ab0e4907cb52cfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kleiner_asteroid: {fileID: 7934556169753618580, guid: 8cf6186a2d72e204a9e2ea232fecbdbd,
+  asteroid: {fileID: 7934556169753618580, guid: 8cf6186a2d72e204a9e2ea232fecbdbd,
     type: 3}
-  cooldown_time_kleiner_asteroid: 0.5
+  base_cooldown_time_asteroid: 0.5
+  cooldown_reduction: 0.05
+  levels_per_reduction: 10
+  max_level_for_reduction: 75
+  cooldown_time_asteroid: 0.5
+  level: 0
 --- !u!4 &1492872341
 Transform:
   m_ObjectHideFlags: 0
@@ -6602,9 +6607,12 @@ MonoBehaviour:
   score: 0
   score_tmp: {fileID: 32281967}
   xp: 0
+  max_xp: 25
+  xp_increase_per_level: 10
   level: 0
   xp_slider: {fileID: 206591291}
   level_tmp: {fileID: 442388196}
+  reset: 1
 --- !u!114 &1492872343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6617,9 +6625,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91c41a10033b1e342ab0e4907cb52cfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kleiner_asteroid: {fileID: 7683310658281210693, guid: 995d5ec2ea0074f46a3e9fd2047e12a1,
+  asteroid: {fileID: 7683310658281210693, guid: 995d5ec2ea0074f46a3e9fd2047e12a1,
     type: 3}
-  cooldown_time_kleiner_asteroid: 2.5
+  base_cooldown_time_asteroid: 2.5
+  cooldown_reduction: 0.1
+  levels_per_reduction: 5
+  max_level_for_reduction: 50
+  cooldown_time_asteroid: 2.5
+  level: 0
 --- !u!1 &1699812187
 GameObject:
   m_ObjectHideFlags: 0
@@ -6707,8 +6720,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 73.5, y: 18.1}
-  m_SizeDelta: {x: 125, y: 22}
+  m_AnchoredPosition: {x: 110, y: 27.9}
+  m_SizeDelta: {x: 200, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1892921512
 GameObject:

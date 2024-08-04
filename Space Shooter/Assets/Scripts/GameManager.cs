@@ -10,16 +10,33 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text score_tmp;
 
     [SerializeField] private float xp;
+    [SerializeField] private float max_xp;
+    [SerializeField] private int xp_increase_per_level;
     [SerializeField] private int level;
     [SerializeField] private Slider xp_slider;
     [SerializeField] private TMP_Text level_tmp;
 
+    [SerializeField] private bool reset;
+
     void Start()
     {
+        if (reset)
+        {
+            PlayerPrefs.SetFloat("Xp", 0);
+            PlayerPrefs.SetInt("Level", 0);
+            PlayerPrefs.SetFloat("MaxXp", 25);
+            PlayerPrefs.SetInt("Score", 0);
+            PlayerPrefs.SetFloat("Health", 100);
+            PlayerPrefs.Save();
+        }
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
         level = PlayerPrefs.GetInt("Level");
+
+        max_xp = PlayerPrefs.GetFloat("MaxXp");
+        xp_slider.maxValue = max_xp;
     }
 
     private void FixedUpdate()
@@ -32,13 +49,16 @@ public class GameManager : MonoBehaviour
         if(xp_slider.maxValue <= xp)
         {
             xp -= xp_slider.maxValue;
-            PlayerPrefs.SetFloat("Xp", xp);
-            PlayerPrefs.Save();
-
             level++;
 
+            max_xp = 25 + (level * xp_increase_per_level);
+
+            PlayerPrefs.SetFloat("Xp", xp);
             PlayerPrefs.SetInt("Level", level);
+            PlayerPrefs.SetFloat("MaxXp", max_xp);
             PlayerPrefs.Save();
+
+            xp_slider.maxValue = max_xp;
         }
         else
         {
