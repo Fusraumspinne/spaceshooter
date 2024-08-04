@@ -401,6 +401,7 @@ MonoBehaviour:
   speed: 15
   destroy_timer: 5.25
   score_value: 1
+  xp_value: 1
   destroy_tags:
   - laser
   - big_rocket

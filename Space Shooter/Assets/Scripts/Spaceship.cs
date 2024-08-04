@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Spaceship : MonoBehaviour
 {
     [SerializeField] private float move_speed;
+
+    [SerializeField] private Slider health_slider;
+    [SerializeField] private float health;
 
     [SerializeField] private GameObject laser_object;
     [SerializeField] private GameObject cannon_object_1;
@@ -32,6 +36,11 @@ public class Spaceship : MonoBehaviour
     private List<GameObject> selected_asteroids = new List<GameObject>();
     private Dictionary<GameObject, GameObject> asteroid_to_crosshair_map = new Dictionary<GameObject, GameObject>();
 
+    private void Start()
+    {
+        health = PlayerPrefs.GetFloat("Health", 100);
+    }
+
     private void Update()
     {
         Movement();
@@ -40,6 +49,8 @@ public class Spaceship : MonoBehaviour
         SelectAsteroids();
         UpdateCrosshairPositions();
         FireTrackingRockets();
+
+        health_slider.value = health;
     }
 
     void Movement()
@@ -207,6 +218,25 @@ public class Spaceship : MonoBehaviour
             }
 
             yield return new WaitForSeconds(rocket_delay); 
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("kleiner_asteroid"))
+        {
+            health -= 10;
+
+            PlayerPrefs.SetFloat("Health", health);
+            PlayerPrefs.Save();
+        }
+
+        if (other.CompareTag("groﬂer_asteroid"))
+        {
+            health -= 25;
+
+            PlayerPrefs.SetFloat("Health", health);
+            PlayerPrefs.Save();
         }
     }
 }

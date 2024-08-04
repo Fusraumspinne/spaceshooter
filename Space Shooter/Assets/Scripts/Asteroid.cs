@@ -7,6 +7,7 @@ public class Asteroid : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float destroy_timer;
     [SerializeField] private int score_value;
+    [SerializeField] private int xp_value;
     [SerializeField] private List<string> destroy_tags;
     bool TimerFinished()
     {
@@ -39,7 +40,13 @@ public class Asteroid : MonoBehaviour
         {
             int currentScore = PlayerPrefs.GetInt("Score", 0);
             currentScore += score_value;
+
             PlayerPrefs.SetInt("Score", currentScore);
+
+            float currentXp = PlayerPrefs.GetFloat("Xp", 0);
+            currentXp += xp_value;
+
+            PlayerPrefs.SetFloat("Xp", currentXp);
             PlayerPrefs.Save();
 
             Destroy(other.gameObject);

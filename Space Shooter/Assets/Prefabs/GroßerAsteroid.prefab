@@ -270,6 +270,7 @@ MonoBehaviour:
   speed: 10
   destroy_timer: 10
   score_value: 5
+  xp_value: 5
   destroy_tags:
   - big_rocket
 --- !u!135 &7055797609040766046
