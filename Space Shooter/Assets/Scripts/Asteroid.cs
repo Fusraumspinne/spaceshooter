@@ -44,7 +44,15 @@ public class Asteroid : MonoBehaviour
             PlayerPrefs.SetInt("Score", currentScore);
 
             float currentXp = PlayerPrefs.GetFloat("Xp", 0);
-            currentXp += xp_value;
+
+            if (PlayerPrefs.GetInt("Xpmulti") == 1) 
+            {
+                currentXp += xp_value * 3;
+            }
+            else
+            {
+                currentXp += xp_value;
+            }
 
             PlayerPrefs.SetFloat("Xp", currentXp);
             PlayerPrefs.Save();

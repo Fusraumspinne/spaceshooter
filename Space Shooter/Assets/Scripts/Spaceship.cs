@@ -24,13 +24,17 @@ public class Spaceship : MonoBehaviour
     [SerializeField] private GameObject tracking_rocket;
     [SerializeField] private GameObject cannon_tracking_rocket_1;
     [SerializeField] private GameObject cannon_tracking_rocket_2;
-    [SerializeField] private GameObject crosshair_rocket; 
-    [SerializeField] private Canvas canvas; 
+    [SerializeField] private GameObject crosshair_rocket;
+    [SerializeField] private Canvas canvas;
     [SerializeField] private int max_crosshairs;
     [SerializeField] private Transform player_transform;
     [SerializeField] private float rocket_delay;
     [SerializeField] private float cooldown_time_tracking_rocket;
     private float last_trigger_tracking_rocket;
+
+    [SerializeField] private GameObject xp_multi_anzeige;
+    [SerializeField] private float cooldown_time_xp;
+    private float last_trigger_xp;
 
     private List<GameObject> asteroids = new List<GameObject>();
     private List<GameObject> selected_asteroids = new List<GameObject>();
@@ -51,6 +55,14 @@ public class Spaceship : MonoBehaviour
         FireTrackingRockets();
 
         health_slider.value = health;
+
+        if (Time.time > last_trigger_xp + cooldown_time_xp)
+        {
+            PlayerPrefs.SetInt("Xpmulti", 0);
+            PlayerPrefs.Save();
+
+            xp_multi_anzeige.SetActive(false);
+        }
     }
 
     void Movement()
@@ -100,7 +112,7 @@ public class Spaceship : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if(Time.time > last_trigger_normal_rocket + cooldown_time_normal_rocket)
+            if (Time.time > last_trigger_normal_rocket + cooldown_time_normal_rocket)
             {
                 Instantiate(normal_rocket, normal_rocket_cannon.transform.position, normal_rocket.transform.rotation);
 
@@ -217,7 +229,7 @@ public class Spaceship : MonoBehaviour
                 Debug.LogError("TrackingRocket component not found on tracking rocket prefab.");
             }
 
-            yield return new WaitForSeconds(rocket_delay); 
+            yield return new WaitForSeconds(rocket_delay);
         }
     }
 
@@ -229,14 +241,41 @@ public class Spaceship : MonoBehaviour
 
             PlayerPrefs.SetFloat("Health", health);
             PlayerPrefs.Save();
-        }
 
-        if (other.CompareTag("großer_asteroid"))
+            Destroy(other.gameObject);
+        } 
+        else if (other.CompareTag("großer_asteroid"))
         {
             health -= 25;
 
             PlayerPrefs.SetFloat("Health", health);
             PlayerPrefs.Save();
+
+            Destroy(other.gameObject);
+        }
+        else if (other.CompareTag("heilung"))
+        {
+            float add_health = health_slider.maxValue * 0.25f;
+
+            health += add_health;
+
+            if (health >= health_slider.maxValue)
+            {
+                health = health_slider.maxValue;
+            }
+
+            Destroy(other.gameObject);  
+        }
+        else if (other.CompareTag("xp"))
+        {
+            last_trigger_xp = Time.time;
+            PlayerPrefs.SetInt("Xpmulti", 1);
+            PlayerPrefs.Save();
+
+            Destroy(other.gameObject);
+
+            xp_multi_anzeige.SetActive(true);
         }
     }
+
 }

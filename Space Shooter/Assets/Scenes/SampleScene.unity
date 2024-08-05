@@ -1112,6 +1112,79 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1022992014
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1022992015}
+  - component: {fileID: 1022992017}
+  - component: {fileID: 1022992016}
+  m_Layer: 5
+  m_Name: XpMulti
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1022992015
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1022992014}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1333978771}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 110.100006, y: 8}
+  m_SizeDelta: {x: 200, y: 5}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1022992016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1022992014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0.6126497, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 0}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &1022992017
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1022992014}
+  m_CullTransparentMesh: 1
 --- !u!1 &1065351541
 GameObject:
   m_ObjectHideFlags: 0
@@ -1702,6 +1775,7 @@ RectTransform:
   - {fileID: 206591290}
   - {fileID: 32281969}
   - {fileID: 1699812189}
+  - {fileID: 1022992015}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6547,9 +6621,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1492872341}
+  - component: {fileID: 1492872342}
   - component: {fileID: 1492872340}
   - component: {fileID: 1492872343}
-  - component: {fileID: 1492872342}
+  - component: {fileID: 1492872344}
+  - component: {fileID: 1492872345}
   m_Layer: 0
   m_Name: Gamemanager
   m_TagString: Untagged
@@ -6612,7 +6688,7 @@ MonoBehaviour:
   level: 0
   xp_slider: {fileID: 206591291}
   level_tmp: {fileID: 442388196}
-  reset: 1
+  reset: 0
 --- !u!114 &1492872343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6633,6 +6709,34 @@ MonoBehaviour:
   max_level_for_reduction: 50
   cooldown_time_asteroid: 2.5
   level: 0
+--- !u!114 &1492872344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1492872339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bae77a33b9f29fd49b0fb0633bea8ebc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pick_up: {fileID: 7376412738705304954, guid: 381cb8029face0b46819041359421b94, type: 3}
+  cooldown_time_pick_up: 45
+--- !u!114 &1492872345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1492872339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bae77a33b9f29fd49b0fb0633bea8ebc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pick_up: {fileID: 7680702835240987333, guid: df80f76c945aa4c48acdc294341c0e4f, type: 3}
+  cooldown_time_pick_up: 100
 --- !u!1 &1699812187
 GameObject:
   m_ObjectHideFlags: 0
@@ -6720,7 +6824,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 110, y: 27.9}
+  m_AnchoredPosition: {x: 110, y: 33}
   m_SizeDelta: {x: 200, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1892921512
@@ -11768,3 +11872,5 @@ MonoBehaviour:
   player_transform: {fileID: 8204115870168027825}
   rocket_delay: 0.15
   cooldown_time_tracking_rocket: 5
+  xp_multi_anzeige: {fileID: 1022992014}
+  cooldown_time_xp: 30

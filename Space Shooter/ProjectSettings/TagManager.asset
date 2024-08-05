@@ -9,6 +9,8 @@ TagManager:
   - big_rocket
   - tracking_rocket
   - "gro\xDFer_asteroid"
+  - heilung
+  - xp
   layers:
   - Default
   - TransparentFX
