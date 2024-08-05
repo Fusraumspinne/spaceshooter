@@ -203,7 +203,7 @@ Transform:
   - {fileID: 2383559046260397466}
   - {fileID: 4701416202135129842}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2619433309593388748
 MeshFilter:
@@ -292,7 +292,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1
+  m_Radius: 0.75
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1960230900028188204
 Rigidbody:

@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private bool reset;
 
+    [SerializeField] private bool paused;
+
     void Start()
     {
         if (reset)
@@ -66,5 +68,30 @@ public class GameManager : MonoBehaviour
         }
 
         level_tmp.text = level.ToString();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape)) 
+        {
+            if (paused)
+            {   
+                paused = false;
+                
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+
+                Time.timeScale = 1;
+            }
+            else
+            {
+                paused = true;
+
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+
+                Time.timeScale = 0;
+            }
+        }
     }
 }

@@ -29,10 +29,11 @@ public class Spaceship : MonoBehaviour
     [SerializeField] private int max_crosshairs;
     [SerializeField] private Transform player_transform;
     [SerializeField] private float rocket_delay;
+    [SerializeField] private bool tracking_rocket_available;
     [SerializeField] private float cooldown_time_tracking_rocket;
     private float last_trigger_tracking_rocket;
 
-    [SerializeField] private GameObject xp_multi_anzeige;
+    [SerializeField] private Slider boost_xp_slider;
     [SerializeField] private float cooldown_time_xp;
     private float last_trigger_xp;
 
@@ -60,8 +61,6 @@ public class Spaceship : MonoBehaviour
         {
             PlayerPrefs.SetInt("Xpmulti", 0);
             PlayerPrefs.Save();
-
-            xp_multi_anzeige.SetActive(false);
         }
     }
 
@@ -87,7 +86,7 @@ public class Spaceship : MonoBehaviour
 
     void ShootingLaser()
     {
-        if (asteroid_to_crosshair_map.Count == 0)
+        if (asteroid_to_crosshair_map.Count == 0 || !tracking_rocket_available)
         {
             if (Time.time > last_trigger_time_laser + cooldown_time_laser)
             {
@@ -125,11 +124,17 @@ public class Spaceship : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            if (asteroid_to_crosshair_map.Count > 0)
+            {
+                ClearAllCrosshairs();
+            }
+
             if (Time.time > last_trigger_tracking_rocket + cooldown_time_tracking_rocket)
             {
                 if (asteroid_to_crosshair_map.Count > 0)
                 {
-                    ClearAllCrosshairs();
+                    last_trigger_tracking_rocket = Time.time;
+                    return;
                 }
                 else
                 {
@@ -151,6 +156,11 @@ public class Spaceship : MonoBehaviour
 
                 last_trigger_tracking_rocket = Time.time;
             }
+        }
+
+        if (Time.time > last_trigger_tracking_rocket + cooldown_time_tracking_rocket)
+        {
+            tracking_rocket_available = true;
         }
     }
 
@@ -203,8 +213,9 @@ public class Spaceship : MonoBehaviour
 
     void FireTrackingRockets()
     {
-        if (Input.GetMouseButtonDown(0) && asteroid_to_crosshair_map.Count > 0)
+        if (Input.GetMouseButtonDown(0) && asteroid_to_crosshair_map.Count > 0 && tracking_rocket_available)
         {
+            tracking_rocket_available = false;
             StartCoroutine(FireRocketsCoroutine());
         }
     }
@@ -274,8 +285,18 @@ public class Spaceship : MonoBehaviour
 
             Destroy(other.gameObject);
 
-            xp_multi_anzeige.SetActive(true);
+            boost_xp_slider.value = boost_xp_slider.maxValue;
+
+            StartCoroutine(DecreaseXPBoost());
         }
     }
 
+    IEnumerator DecreaseXPBoost()
+    {
+        while (boost_xp_slider.value > 0)
+        {
+            boost_xp_slider.value -= 1;
+            yield return new WaitForSeconds(1f);
+        }
+    }
 }
